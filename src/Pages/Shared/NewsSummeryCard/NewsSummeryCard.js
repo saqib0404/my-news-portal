@@ -5,7 +5,7 @@ import Image from 'react-bootstrap/Image'
 import { FaEye, FaRegBookmark, FaShareAlt, FaStar } from 'react-icons/fa';
 
 const NewsSummeryCard = ({ news }) => {
-    console.log(news);
+    // console.log(news);
     const { author, details, image_url, rating, title, _id, total_view } = news;
     return (
         <div>
