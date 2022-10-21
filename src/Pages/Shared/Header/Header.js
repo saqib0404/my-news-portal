@@ -45,12 +45,12 @@ const Header = () => {
                         {
                             user ? undefined :
                                 <>
-                                    <Button className='btn-login' variant="light" size="sm">
-                                        <Link to="/login">Login</Link>
-                                    </Button>
-                                    <Button className='btn-login' variant="light" size="sm">
-                                        <Link to="/register">Register</Link>
-                                    </Button>
+                                    <Link to="/login">
+                                        <Button className='btn-login' variant="light" size="sm">Login</Button>
+                                    </Link>
+                                    <Link to="/register">
+                                        <Button className='btn-login' variant="light" size="sm">Register</Button>
+                                    </Link>
                                 </>
                         }
                         <Nav.Link href="#deets">{user?.displayName}</Nav.Link>

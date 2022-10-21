@@ -4,13 +4,15 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { FaGoogle, FaGithub, FaFacebook, FaYoutube, FaTwitch, FaWhatsapp, FaDiscord } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider';
 import BrandCarousel from '../BrandCarousel/BrandCarousel';
 
 const RightSideNav = () => {
     const { providerGoogle, providerGithub } = useContext(AuthContext);
     const navigate = useNavigate();
+    const location = useLocation()
+    const from = location.state?.from?.pathname || '/';
 
     const googleProvider = new GoogleAuthProvider();
     const githubhProvider = new GithubAuthProvider();
@@ -19,7 +21,7 @@ const RightSideNav = () => {
         providerGoogle(googleProvider)
             .then(res => {
                 console.log(res.user);
-                navigate('/')
+                navigate(from, { replace: true });
             })
             .catch(err => {
                 console.log(err);
@@ -29,7 +31,7 @@ const RightSideNav = () => {
         providerGithub(githubhProvider)
             .then(res => {
                 console.log(res.user);
-                navigate('/')
+                navigate(from, { replace: true });
             })
             .catch(err => {
                 console.log(err);
