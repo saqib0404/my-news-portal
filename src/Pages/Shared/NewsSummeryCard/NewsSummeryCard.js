@@ -12,7 +12,7 @@ const NewsSummeryCard = ({ news }) => {
             <Card className="mb-3">
                 <Card.Header className='d-flex justify-content-between align-items-center'>
                     <div className='d-flex align-items-center'>
-                        <Image roundedCircle src={author.img} style={{ height: "60px", marginRight: "10px" }}></Image>
+                        <Image roundedCircle src={author.img} style={{ height: "40px", marginRight: "10px" }}></Image>
                         <div>
                             <small>{author.name}</small> <br />
                             <small>{author.published_date}</small>
