@@ -1,4 +1,4 @@
-import { GoogleAuthProvider } from 'firebase/auth';
+import { GithubAuthProvider, GoogleAuthProvider } from 'firebase/auth';
 import React, { useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
@@ -8,10 +8,11 @@ import { AuthContext } from '../../../contexts/AuthProvider';
 import BrandCarousel from '../BrandCarousel/BrandCarousel';
 
 const RightSideNav = () => {
-    const { providerGoogle } = useContext(AuthContext);
-
+    const { providerGoogle, providerGithub } = useContext(AuthContext);
 
     const googleProvider = new GoogleAuthProvider();
+    const githubhProvider = new GithubAuthProvider();
+
     const handleGoogleSignIn = () => {
         providerGoogle(googleProvider)
             .then(res => {
@@ -21,11 +22,21 @@ const RightSideNav = () => {
                 console.log(err);
             })
     }
+    const handleGithubSignIn = () => {
+        providerGithub(githubhProvider)
+            .then(res => {
+                console.log(res.user);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
     return (
         <div>
-            <ButtonGroup vertical>
+            <ButtonGroup className='d-flex' vertical>
                 <Button onClick={handleGoogleSignIn} className='px-5 mb-2 rounded' variant="outline-primary"><FaGoogle></FaGoogle> Login via Google</Button>
-                <Button className='mb-4 rounded' variant="outline-dark"><FaGithub></FaGithub> Login via Github</Button>
+                <Button onClick={handleGithubSignIn} className='mb-4 rounded' variant="outline-dark"><FaGithub></FaGithub> Login via Github</Button>
             </ButtonGroup>
             <h5>Find us on</h5>
             <ListGroup className='mb-4'>

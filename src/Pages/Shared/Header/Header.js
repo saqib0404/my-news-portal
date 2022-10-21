@@ -8,10 +8,17 @@ import { Link } from 'react-router-dom';
 import LeftSideNav from '../LeftSideNav/LeftSideNav';
 import { AuthContext } from '../../../contexts/AuthProvider';
 import { FaUserAlt } from 'react-icons/fa';
-import { Image } from 'react-bootstrap';
+import { Button, Image } from 'react-bootstrap';
 
 const Header = () => {
-    const { user } = useContext(AuthContext)
+    const { user, logOut } = useContext(AuthContext)
+
+    const handleLogOut = () => {
+        logOut()
+            .then(() => { })
+            .catch(err => console.log(err))
+    }
+
     return (
         <Navbar className="mb-3" collapseOnSelect expand="lg" bg="light" variant="light">
             <Container>
@@ -32,19 +39,34 @@ const Header = () => {
                                 Separated link
                             </NavDropdown.Item>
                         </NavDropdown>
+
                     </Nav>
                     <Nav className='d-flex align-items-center'>
+                        {
+                            user ? undefined :
+                                <>
+                                    <Button className='btn-login' variant="light" size="sm">
+                                        <Link to="/login">Login</Link>
+                                    </Button>
+                                    <Button className='btn-login' variant="light" size="sm">
+                                        <Link to="/register">Register</Link>
+                                    </Button>
+                                </>
+                        }
                         <Nav.Link href="#deets">{user?.displayName}</Nav.Link>
-                        <Nav.Link  eventKey={2} href="#memes">
+                        <Nav.Link eventKey={2} href="#memes">
                             {user?.photoURL ?
                                 <Image
                                     style={{ height: "30px" }}
                                     roundedCircle
-                                    src={user.photoURL}
+                                    src={user?.photoURL}
                                 ></Image>
                                 :
                                 <FaUserAlt />
                             }
+                        </Nav.Link>
+                        <Nav.Link href="#">
+                            {user && <Button onClick={handleLogOut} variant="light">Log out</Button>}
                         </Nav.Link>
                     </Nav>
                     <div className='d-lg-none'>
