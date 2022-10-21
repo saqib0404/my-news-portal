@@ -3,11 +3,12 @@ import './Register.css'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { AuthContext } from '../../../../contexts/AuthProvider';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Register = () => {
     const [error, setError] = useState('');
-    const { createUser } = useContext(AuthContext);
+    const [accepted, setAccepted] = useState(false);
+    const { createUser, updateUser } = useContext(AuthContext);
     const navigate = useNavigate()
 
     const handleSubmit = e => {
@@ -17,11 +18,12 @@ const Register = () => {
         const password = form.password.value;
         const name = form.name.value;
         const photoURL = form.photoURL.value;
-        console.log(email, password, name, photoURL);
+        // console.log(email, password, name, photoURL);
         createUser(email, password)
             .then(res => {
                 console.log(res.user);
-                setError('')
+                setError('');
+                handleProfileUpdate(name, photoURL)
                 form.reset();
                 navigate('/')
             })
@@ -29,6 +31,19 @@ const Register = () => {
                 console.log(e);
                 setError(e.message);
             })
+    }
+    const handleChecked = e => {
+        setAccepted(e.target.checked);
+    }
+
+    const handleProfileUpdate = (name, photoURL) => {
+        const profile = {
+            displayName: name,
+            photoURL: photoURL
+        }
+        updateUser(profile)
+            .then(() => { })
+            .catch(e => console.log(e))
     }
 
     return (
@@ -56,8 +71,11 @@ const Register = () => {
                         {error}
                     </Form.Text>
                 </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                    <Form.Check onClick={handleChecked} type="checkbox" label={<>Accept out <Link to='/terms'>Terms and Conditions</Link></>} />
+                </Form.Group>
 
-                <Button variant="primary" type="submit">
+                <Button variant="primary" type="submit" disabled={!accepted}>
                     Register
                 </Button>
             </Form>
