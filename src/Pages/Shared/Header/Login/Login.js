@@ -3,9 +3,13 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 const Login = () => {
+
+    const HandleSubmit = () => {
+
+    }
     return (
         <div className='d-flex justify-content-center mb-4'>
-            <Form className='form'>
+            <Form onSubmit={HandleSubmit} className='form'>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control name="email" type="email" placeholder="Enter email" />
