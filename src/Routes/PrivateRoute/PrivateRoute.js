@@ -11,7 +11,7 @@ const PrivateRoute = ({ children }) => {
         return <div className='d-flex justify-content-center'><Spinner animation="border" variant="primary" /></div>
     }
 
-    if (!user) {
+    if (!user?.uid) {
         return <Navigate to='/login' state={{ from: location }} replace></Navigate>
     }
     return children

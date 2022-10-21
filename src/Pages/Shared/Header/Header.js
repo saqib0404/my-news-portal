@@ -14,9 +14,7 @@ const Header = () => {
     const { user, logOut } = useContext(AuthContext)
 
     const handleLogOut = () => {
-        logOut()
-            .then(() => { })
-            .catch(err => console.log(err))
+        logOut();
     }
 
     return (
@@ -43,7 +41,7 @@ const Header = () => {
                     </Nav>
                     <Nav className='d-flex align-items-center'>
                         {
-                            user ? undefined :
+                            user?.uid ? undefined :
                                 <>
                                     <Link to="/login">
                                         <Button className='btn-login' variant="light" size="sm">Login</Button>
@@ -66,7 +64,7 @@ const Header = () => {
                             }
                         </Nav.Link>
                         <Nav.Link href="#">
-                            {user && <Button onClick={handleLogOut} variant="light">Log out</Button>}
+                            {user?.uid && <Button onClick={handleLogOut} variant="light">Log out</Button>}
                         </Nav.Link>
                     </Nav>
                     <div className='d-lg-none'>
