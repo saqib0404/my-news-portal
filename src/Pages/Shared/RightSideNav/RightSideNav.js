@@ -3,13 +3,14 @@ import React, { useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ListGroup from 'react-bootstrap/ListGroup';
+import toast from 'react-hot-toast';
 import { FaGoogle, FaGithub, FaFacebook, FaYoutube, FaTwitch, FaWhatsapp, FaDiscord } from 'react-icons/fa';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider';
 import BrandCarousel from '../BrandCarousel/BrandCarousel';
 
 const RightSideNav = () => {
-    const { providerGoogle, providerGithub } = useContext(AuthContext);
+    const { providerGoogle, providerGithub, emailVerification } = useContext(AuthContext);
     const navigate = useNavigate();
     const location = useLocation()
     const from = location.state?.from?.pathname || '/';
@@ -32,10 +33,17 @@ const RightSideNav = () => {
             .then(res => {
                 console.log(res.user);
                 navigate(from, { replace: true });
+                handEmailVerification();
+                toast.success("Please verify your email");
             })
             .catch(err => {
                 console.log(err);
             })
+    }
+    const handEmailVerification = () => {
+        emailVerification()
+            .then(() => { })
+            .catch(e => console.log(e))
     }
 
     return (
